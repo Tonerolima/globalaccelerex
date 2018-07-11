@@ -32,7 +32,7 @@ router.post('/persons/:id', (req, res) => {
     if(!req.body.description){
         return res.status(400).send({status: false, message: 'Incomplete parameters passed. Missing fields: description'});
     }
-    User.findByIdAndUpdate({description: req.body.description}, (err, user) => {
+    User.findByIdAndUpdate(req.params.id, {description: req.body.description}, (err, user) => {
         if(err){
             console.log(err);
             return res.status(400).send({status: false, message: "Person with id " + req.params.id + " does not exist"});
