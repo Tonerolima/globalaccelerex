@@ -43,6 +43,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 // }
 
 // ROUTES
+app.get('/', (req, res) => {
+    res.redirect('/persons');
+})
+
+
 app.get('/persons', (req, res) => {
     User.find((err, users) => {
         if(err){
