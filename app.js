@@ -8,8 +8,10 @@ const indexRoutes = require('./routes');
 // Mongoose connection
 mongoose.connect(process.env.DATABASEURL);
 
-
+// body-parser middleware for handing form data
 app.use(bodyParser.urlencoded({extended: true}));
+
+// Routes
 app.use(indexRoutes);
 
 

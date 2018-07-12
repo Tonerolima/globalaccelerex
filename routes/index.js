@@ -17,10 +17,19 @@ router.get('/persons', (req, res) => {
 })
 
 
+router.post('/persons/create', (req, res) => {
+    User.create(req.body, (err, user) => {
+        if(err){
+            return res.status(400).send({status: false, message: err.message});
+        }
+        res.status(200).send({status: true, person: user});
+    })
+})
+
+
 router.get('/persons/:id', (req, res) => {
     User.findById(req.params.id, (err, user) => {
         if(err){
-            console.log(err);
             return res.status(400).send({status: false, message: "Person with id " + req.params.id + " does not exist"});
         }
         return res.status(200).send({status: true, person: user});
@@ -34,7 +43,6 @@ router.post('/persons/:id', (req, res) => {
     }
     User.findByIdAndUpdate(req.params.id, {description: req.body.description}, (err, user) => {
         if(err){
-            console.log(err);
             return res.status(400).send({status: false, message: "Person with id " + req.params.id + " does not exist"});
         }
         res.redirect('/persons/'+req.params.id);  
