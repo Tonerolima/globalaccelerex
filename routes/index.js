@@ -7,12 +7,14 @@ router.get('/', (req, res) => {
 
 
 router.get('/persons', (req, res) => {
-    User.find((err, users) => {
+    let personsPerPage = 5;
+    let page = req.query.page || 1;
+    User.find().skip((personsPerPage * page) - personsPerPage).limit(personsPerPage).exec((err, users) => {
         if(err){
             console.log(err);
             return res.send('Server error, this is being investigated');
         }
-        return res.status(200).send({status: true, persons: users});
+        return res.status(200).send({status: true, pageCount: page, itemCount: users.length, persons: users});
     })
 })
 
@@ -45,7 +47,7 @@ router.post('/persons/:id', (req, res) => {
         if(err){
             return res.status(400).send({status: false, message: "Person with id " + req.params.id + " does not exist"});
         }
-        res.redirect('/persons/'+req.params.id);  
+        res.redirect('/persons/'+req.params.id);
     })
 })
 
