@@ -33,6 +33,8 @@ router.get('/persons/:id', (req, res) => {
     User.findById(req.params.id, (err, user) => {
         if(err){
             return res.status(400).send({status: false, message: "Person with id " + req.params.id + " does not exist"});
+        } else if(!user) {
+            return res.status(400).send({status: false, message: "Person with id " + req.params.id + " does not exist"});
         }
         return res.status(200).send({status: true, person: user});
     })

@@ -9,7 +9,9 @@ const indexRoutes = require('./routes');
 mongoose.connect(process.env.DATABASEURL);
 
 // body-parser middleware for handing form data
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
 
 // Routes
 app.use(indexRoutes);
