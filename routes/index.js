@@ -48,6 +48,8 @@ router.post('/persons/:id', (req, res) => {
     User.findByIdAndUpdate(req.params.id, {description: req.body.description}, (err, user) => {
         if(err){
             return res.status(400).send({status: false, message: "Person with id " + req.params.id + " does not exist"});
+        } else if(!user) {
+            return res.status(400).send({status: false, message: "Person with id " + req.params.id + " does not exist"});
         }
         res.redirect('/persons/'+req.params.id);
     })
